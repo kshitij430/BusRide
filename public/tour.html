@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- CSS LINK -->
+  <link rel="stylesheet" href="./css/main.css" />
+  <!-- FONT LINK -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet" />
+  <!-- FAVICON -->
+  <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon" />
+  <!-- FONTAWESOME CDN -->
+  <script src="https://kit.fontawesome.com/3cc1015340.js" crossorigin="anonymous"></script>
+  <title>Bus Ride</title>
+</head>
+
+<body>
+  <div class="error hidden">Please Enter a valid Input</div>
+  <section id="header">
+    <div class="container">
+      <div class="left-side">
+        <a href="./index.html"><img src="./img/main-logo.png" alt="main-logo" /></a>
+      </div>
+      <div class="right-side">
+        <a href="./login.html"><button>Login</button></a>
+        <a href="./signup.html"><button>Sign Up</button></a>
+      </div>
+    </div>
+  </section>
+
+  <section id="filter-content">
+    <!-- HIDDEN TILL BUTTON IS SUCCESSFULLY SUBMITTED -->
+    <div class="background-color-container">
+      <div class="filter">
+        <div class="tour-result">
+          <h4>Pune</h4>
+          <span><i class="fa fa-light fa-arrow-right"></i></span>
+          <h4>Nagpur</h4>
+          <h4>21 June | Tuesday</h4>
+        </div>
+        <h4 id="filter-head">
+          <span> <i class="fa fa-solid fa-filter"></i>FILTERS</span>
+          <span id="border"></span>
+        </h4>
+
+        <h4>BUS TYPES</h4>
+        <div class="bus-type filter-tile filter-tile-flex">
+          <input type="checkbox" name="seater" id="seater" />
+          <label for="seater"> SEATER </label>
+
+          <input type="checkbox" name="sleeper" id="sleeper" />
+          <label for="sleeper"> SLEEPER</label>
+
+          <input type="checkbox" name="AC" id="AC" />
+          <label for="AC"> AC</label>
+
+          <input type="checkbox" name="NONAC" id="NONAC" />
+          <label for="NONAC"> NONAC</label>
+        </div>
+
+        <h4>DEPARTURE TIME</h4>
+        <div class="departure-time filter-tile filter-tile-flex">
+          <input type="checkbox" name="departure-before6" id="departure-before6" />
+          <label for="departure-before6"> Before 6 am</label>
+
+          <input type="checkbox" name="departure-6to12" id="departure-6to12" />
+          <label for="departure-6to12"> 6 am to 12 pm</label>
+
+          <input type="checkbox" name="departure-12to6" id="departure-12to6" />
+          <label for="departure-12to6"> 12 pm to 6 pm</label>
+
+          <input type="checkbox" name="departure-after6" id="departure-after6" />
+          <label for="departure-after6"> After 6 pm</label>
+        </div>
+
+        <h4>ARRIVAL TIME</h4>
+        <div class="arrival-time filter-tile filter-tile-flex">
+          <input type="checkbox" name="arrival-before6" id="arrival-before6" />
+          <label for="arrival-before6"> Before 6 am</label>
+
+          <input type="checkbox" name="arrival-6to12" id="arrival-6to12" />
+          <label for="arrival-6to12"> 6 am to 12 pm</label>
+
+          <input type="checkbox" name="arrival-12to6" id="arrival-12to6" />
+          <label for="arrival-12to6"> 12 pm to 6 pm</label>
+
+          <input type="checkbox" name="arrival-after6" id="arrival-after6" />
+          <label for="arrival-after6"> After 6 pm</label>
+        </div>
+
+        <h4><label for="boarding-point">BOARDING POINT</label></h4>
+        <div class="boarding-point filter-tile">
+          <input type="text" name="boarding-point" id="boarding-point" placeholder="BOARDING POINT" />
+        </div>
+
+        <h4><label for="dropping-point">DROPPING POINT</label></h4>
+        <div class="dropping-point filter-tile">
+          <input type="text" name="dropping-point" id="dropping-point" placeholder="DROPPING POINT" />
+        </div>
+
+        <h4>AMENITIES</h4>
+        <div class="amenities filter-tile">
+          <div class="amenities-tile"><i class="fa fa-solid fa-wifi"></i> Wifi</div>
+          <div class="amenities-tile"><i class="fa fa-solid fa-charging-station"></i> Charging Point</div>
+          <div class="amenities-tile"><i class="fa fa-solid fa-video"></i> Movie</div>
+          <div class="amenities-tile"><i class="fa fa-solid fa-bed"></i> Blankets</div>
+          <div class="amenities-tile"><i class="fa fa-solid fa-restroom"></i> Toilet</div>
+        </div>
+        <div class="filter-tile booking-tile hidden">
+          <form action="">
+            <div class="seat-details">
+                <div class="seat-selection">
+                  <div class="seat-booking-details">
+                    <div id="booking" class="booking-header" style="background-color: green; color: #fff;">
+                      <h3 style="font-weight: lighter;">Seat Details</h3>
+                      <h3 style="font-weight: lighter;">Price</h3>
+                    </div>
+                    <div class="booking-content">
+                    </div>
+                    <div id="booking">
+                      <h4>SubTotal</h4>
+                      <h4 id="booking-price"></h4>
+                    </div>
+                  </div>
+                  
+                </div>
+            </div>
+            <button type="submit" id="submit" style="background-color: green;">Buy Tickets</button>
+          </form>
+        </div>
+      </div>
+      <div id="tour-content">
+        <div class="head-tile">
+          <div id="bus"><span style="font-weight: bolder">41 Buses</span> found</div>
+          <div>Departure</div>
+          <div>Duration</div>
+          <div>Arrival</div>
+          <div>Ratings</div>
+          <div>Fare</div>
+          <div>Seats Available</div>
+        </div>
+        <div class="bus-content">
+          <div class="tour-tile">
+            <div id="bus">
+              <div class="column-details">
+                <div style="font-weight: bolder">Shiv Sai</div>
+                <div class="boarding">AC Sleeper</div>
+                <div class="icons">
+                  <i class="fa fa-solid fa-wifi"></i>
+                  <i class="fa fa-solid fa-charging-station"></i>
+                  <i class="fa fa-solid fa-video"></i>
+                  <i class="fa fa-solid fa-bed"></i>
+                  <i class="fa fa-solid fa-restroom"></i>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="column-details">
+                <div style="font-weight: bolder ;font-size: 25px;">20:55</div>
+                <div class="boarding">Karegaon Bus Stand</div>
+              </div>
+            </div>
+            <div>13h 45m</div>
+            <div>
+              <div class="column-details">
+                <div style="font-weight: bolder; font-size: 25px;">10:55</div>
+                <div class="arrival-date" style="color:#DA2C43;">23-Jun</div>
+                <div class="arrival">Kondhali Bus Stand</div>
+              </div>
+            </div>
+            <div>
+              <div style="background-color: green; color: white; width: 80px; padding: 5px 10px;"> <i
+                  class="fa fa-solid fa-star"></i> 4.1 </div>
+            </div>
+            <div>&#8377 968</div>
+            <div>
+              <div class="column-details">
+                <div>10 Seats Available</div>
+              </div>
+            </div>
+          </div>
+          <div class="bottom-bar">
+            <div id="bus-photos">Bus Photos</div>
+            <div id="bus-reviews">View Reviews</div>
+            <div id="view-seatBtn" style="background-color:		#B87333;">VIEW SEATS</div>
+          </div>
+        </div>
+        <!-- SLIDESHOW DIV -->
+        <div class="review-photo hidden">
+          <!-- Slideshow container -->
+          <div class="slideshow-container">
+            <!-- Full-width images with number and caption text -->
+            <div class="mySlides fade">
+              <img src="./img/bus/shivshahi-1.jpg">
+            </div>
+
+            <div class="mySlides fade">
+              <img src="./img/bus/shivshahi-2.jpg">
+            </div>
+
+            <div class="mySlides fade">
+              <img src="./img/bus/shivshahi-3.jpg">
+            </div>
+            <div class="mySlides fade">
+              <img src="./img/bus/shivshahi-4.jpg">
+            </div>
+            <!-- Next and previous buttons -->
+            <a class="prev">&#10094;</a>
+            <a class="next">&#10095;</a>
+          </div>
+        </div>
+        <!-- VIEW SEATS DIV -->
+        <div class="view-seat hidden">
+          <div id="front">FRONT</div>
+          <div class="view-seat-container">
+            <!-- /////////////////////// -->
+            <div class="left-sitting">
+              <h2>DOOR</h2>
+              <div class="pair-seat">
+                <div id="user-seat">A1</div>
+                <div id="user-seat">A2</div>
+              </div>
+              <div class="pair-seat">
+                <div id="user-seat">B1</div>
+                <div id="user-seat">B2</div>
+              </div>
+              <div class="pair-seat">
+                <div id="user-seat">C1</div>
+                <div id="user-seat">C2</div>
+              </div>
+              <div class="pair-seat">
+                <div id="user-seat">D1</div>
+                <div id="user-seat">D2</div>
+              </div>
+              <div class="pair-seat">
+                <div id="user-seat">E1</div>
+                <div id="user-seat">E2</div>
+              </div>
+              <div class="pair-seat">
+                <div id="user-seat">F1</div>
+                <div id="user-seat">F2</div>
+              </div>
+              <div class="pair-seat">
+                <div id="user-seat">G1</div>
+                <div id="user-seat">G2</div>
+              </div>
+              <div class="pair-seat">
+                <div id="user-seat">H1</div>
+                <div id="user-seat">H2</div>
+              </div>
+              <div class="pair-seat">
+                <div id="user-seat">I1</div>
+                <div id="user-seat">I2</div>
+              </div>
+              <div class="pair-seat">
+                <div id="user-seat">J1</div>
+                <div id="user-seat">J2</div>
+              </div>
+
+            </div>
+            <div class="right-sitting">
+              <div id="user-photo"><i class="fa fa-2x fa-solid fa-user"></i></div>
+              <div class="pair-seat">
+                <div id="user-seat">A3</div>
+                <div id="user-seat">A4</div>
+              </div>
+              <div class="pair-seat">
+                <div id="user-seat">B3</div>
+                <div id="user-seat">B4</div>
+              </div>
+              <div class="pair-seat">
+                <div id="user-seat">C3</div>
+                <div id="user-seat">C4</div>
+              </div>
+              <div class="pair-seat">
+                <div id="user-seat">D3</div>
+                <div id="user-seat">D4</div>
+              </div>
+              <div class="pair-seat">
+                <div id="user-seat"> E3</div>
+                <div id="user-seat">E4</div>
+              </div>
+              <div class="pair-seat">
+                <div id="user-seat">F3</div>
+                <div id="user-seat">F4</div>
+              </div>
+              <div class="pair-seat">
+                <div id="user-seat">G3</div>
+                <div id="user-seat">G4</div>
+              </div>
+              <div class="pair-seat">
+                <div id="user-seat">H3</div>
+                <div id="user-seat">H4</div>
+              </div>
+              <div class="pair-seat">
+                <div id="user-seat">I3</div>
+                <div id="user-seat">I4</div>
+              </div>
+              <div class="pair-seat">
+                <div id="user-seat">J3</div>
+                <div id="user-seat">J4</div>
+              </div>
+            </div>
+          </div>
+          <div id="front">REAR</div>
+          <!-- /////////////////////// -->
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+  <script type="module" src="./js/tour.js"></script>
+</body>
+
+</html>

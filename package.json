@@ -1,0 +1,22 @@
+{
+  "name": "busride",
+  "version": "1.0.0",
+  "description": "Bus Ride Web Application to book bus across Maharashtra State.",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "author": "Kshitij Gajbhiye",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.20.0",
+    "cookie-parser": "^1.4.6",
+    "crypto-js": "^4.1.1",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.4.0",
+    "nodemailer": "^6.7.7",
+    "path": "^0.12.7"
+  }
+}
