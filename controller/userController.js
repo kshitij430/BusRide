@@ -1,6 +1,6 @@
 "use strict";
 const path = require("path");
-const User = require(path.join(__dirname, "..", "model", "User"));
+const User = require(path.join(__dirname, "..", "model", "userModel"));
 const catchAsync = require(path.join(__dirname, "..", "utils", "catchAsync"));
 const Email = require(path.join(__dirname, "..", "utils", "Email"));
 const AppErr = require(path.join(__dirname, "..", "utils", "AppErr"));

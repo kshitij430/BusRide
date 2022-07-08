@@ -9,7 +9,16 @@ const path = require("path");
 const router = express.Router();
 const busController = require(path.join(__dirname, "..", "controller", "busController"));
 const userController = require(path.join(__dirname, "..", "controller", "userController"));
+const reviewRouter = require(path.join(__dirname, "reviewRoute"));
+router.get("/getAll", busController.getAll);
+router.get("/getCityBus", busController.getCityBus);
 
-router.post("/addBus", userController.isLoggedIn, userController.authorizeUser, busController.addBus);
+router.use("/:busID/reviews", reviewRouter);
+
+router.use(userController.isLoggedIn);
+router.use(userController.authorizeUser);
+router.post("/addBus", busController.addBus);
+router.patch("/updateBus/:busID", busController.updateBus);
+router.delete("/deleteBus/:busID", busController.deleteBus);
 
 module.exports = router;

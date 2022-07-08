@@ -24,10 +24,12 @@ app.use(express.static("public"));
 // MINI ROUTERS
 const busRoute = require(path.join(__dirname, "route", "busRoute.js"));
 const userRoute = require(path.join(__dirname, "route", "userRoute.js"));
+const bookingRoute = require(path.join(__dirname, "route", "bookingRoute.js"));
 
 //MOUNTING ROUTER
 app.use("/api/v1/bus", busRoute);
 app.use("/api/v1/user", userRoute);
+app.use("/api/v1/booking", bookingRoute);
 
 // GLOBAL ERROR HANDLER
 app.use(globalErrorHandler);

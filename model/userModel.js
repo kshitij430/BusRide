@@ -50,7 +50,6 @@ UserSchema.pre("save", async function (next) {
 });
 
 UserSchema.pre("validate", function (next) {
-  console.log(this.password, this.confirmPassword);
   if (!this.isNew) return next();
   if (this.password !== this.confirmPassword) return next(new AppErr("Please Validate Password Correctly", 400));
   next();
