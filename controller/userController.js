@@ -37,10 +37,10 @@ exports.signup = catchAsync(async function (req, res, next) {
     confirmPassword: req.body.confirmPassword,
     role: req.body.role,
   });
+  console.log(doc);
   // create token
   const token = doc.createValidationToken();
   // save token and expiry time to the document
-  await doc.save({ validateModifiedOnly: true });
   const url = `${req.protocol}://${req.get("host")}/api/v1/user/verifyUser/${token}`;
   await new Email(doc, url).send("Please Verify your Email Address");
   res.status(200).json({
@@ -104,7 +104,8 @@ exports.isLoggedIn = catchAsync(async function (req, res, next) {
     }
 
     if (!token) {
-      return next(new AppErr("Please Login To Continue"), 403);
+      // return next(new AppErr("Please Login To Continue"), 403);
+      return next();
     }
     // 2) verify the jwt token received from the header
     const reconstructedPayload = await promisify(jwt.verify)(token, process.env.JWT_SECRET_KEY);
@@ -115,10 +116,21 @@ exports.isLoggedIn = catchAsync(async function (req, res, next) {
       return next();
     }
     req.user = user;
+    res.locals.user = user;
     return next();
   } catch (err) {
     return next();
   }
+});
+
+exports.logout = catchAsync(async function (req, res) {
+  res.cookie("jwt", "loggedOut", {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+  res.status(200).json({
+    status: "success",
+  });
 });
 
 exports.authorizeUser = function (req, res, next) {

@@ -1,0 +1,9 @@
+extends base
+block content
+    section#main-content
+        .search-bus
+            form.city--form(action='/busTour' method='post')
+                input(type='text' id = 'busDepartureCity', name='busDepartureCity' placeholder='From')
+                input(type='text' id = 'busArrivalCity' ,name='busArrivalCity' placeholder='To')
+                input(type='date' id = 'date' ,name='date')
+                button#submitBtn(type='submit') Submit

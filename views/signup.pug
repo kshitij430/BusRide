@@ -1,0 +1,14 @@
+extends base
+block content
+    section#login
+        form.form.signup--form(method='post')
+            h1 CREATE YOUR ACCOUNT!
+            label(for='name') Your Name
+            input#name.form__input(name='name' type='text')
+            label(for='email') Email Address
+            input#email.form__input(type='email' name='email' placeholder='you@example.com')
+            label(for='password') Password
+            input#password.form__input(type='password' name='password' placeholder='••••••••')
+            label(for='confirm-password') Confrim Password
+            input#confirm-password.form__input(type='password' name='confirm-password' placeholder='••••••••')
+            button#submit(type='submit') Submit

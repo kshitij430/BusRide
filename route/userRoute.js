@@ -11,6 +11,7 @@ const userController = require(path.join(__dirname, "..", "controller", "userCon
 
 router.post("/signup", userController.signup);
 router.post("/login", userController.login);
+router.get("/logout", userController.logout);
 router.get("/verifyUser/:tokenId", userController.verifyEmail);
 // TEST ROUTE
 router.get("*", userController.isLoggedIn, userController.authorizeUser, userController.test);

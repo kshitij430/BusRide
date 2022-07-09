@@ -1,0 +1,38 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  //- CSS LINK
+  link(rel='stylesheet' href='./css/main.css')
+  //- FONT LINK
+  link(rel='preconnect' href='https://fonts.googleapis.com' )
+  link(rel='preconnect' href='https://fonts.gstatic.com' crossorigin='')
+  link(href='https://fonts.googleapis.com/css2?family=Cairo&display=swap' rel='stylesheet')
+  //- FAVICON
+  link(rel='shortcut icon' href='./img/favicon.ico' type='image/x-icon')
+  //- FONTAWESOME CDN
+  script(src='https://kit.fontawesome.com/3cc1015340.js' crossorigin='anonymous')
+  //- AXIOS CDN
+  script(src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js")
+  title #{subTitle}
+body
+  section#header
+    .container
+      .left-side
+        a(href='/')
+          img(src='/img/main-logo.png' alt='main-logo')
+      .right-side
+        if user
+          a(href='/profile')
+            button <i class="fa  fa-solid fa-user"></i> My Profile 
+          a(id='logout')
+            button Log Out 
+        else
+          a(href='/login')
+            button Login
+          a(href='/signup')
+            button Sign Up
+  section#main-content
+    block content
+    script(type="module" src="/js/index.js") 

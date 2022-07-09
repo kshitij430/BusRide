@@ -1,0 +1,10 @@
+extends base
+block content
+    section#login
+        form.form.login--form(method='post')
+            h1 LOG INTO YOUR ACCOUNT
+            label(for='email') Email Address
+            input#email.form__input(type='email' name='email' placeholder='you@example.com')
+            label(for='password') Password
+            input#password.form__input(type='password' name='password' placeholder='••••••••')
+            button#submit(type='submit') Submit

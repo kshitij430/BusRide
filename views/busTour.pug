@@ -1,0 +1,219 @@
+extends base
+block content
+    - console.log("OUR BUSES",buses)
+    section#filter-content
+        .background-color-container
+            .filter
+                .tour-result
+                    h4 Pune
+                    span
+                        i.fa.fa-light.fa-arrow-right
+                    h4 Nagpur
+                    h4 21 June | Tuesday
+                h4#filter-head
+                    span
+                        i.fa.fa-solid.fa-filter  
+                        | FILTERS
+                    span#border
+                h4 BUS TYPES
+                .bus-type.filter-tile.filter-tile-flex
+                    input#seater(type='checkbox' name='seater')
+                    label(for='seater')  SEATER 
+                    input#sleeper(type='checkbox' name='sleeper')
+                    label(for='sleeper')  SLEEPER
+                    input#AC(type='checkbox' name='AC')
+                    label(for='AC')  AC
+                    input#NONAC(type='checkbox' name='NONAC')
+                    label(for='NONAC')  NONAC
+                h4 DEPARTURE TIME
+                .departure-time.filter-tile.filter-tile-flex
+                    input#departure-before6(type='checkbox' name='departure-before6')
+                    label(for='departure-before6')  Before 6 am
+                    input#departure-6to12(type='checkbox' name='departure-6to12')
+                    label(for='departure-6to12')  6 am to 12 pm
+                    input#departure-12to6(type='checkbox' name='departure-12to6')
+                    label(for='departure-12to6')  12 pm to 6 pm
+                    input#departure-after6(type='checkbox' name='departure-after6')
+                    label(for='departure-after6')  After 6 pm
+                h4 ARRIVAL TIME
+                .arrival-time.filter-tile.filter-tile-flex
+                    input#arrival-before6(type='checkbox' name='arrival-before6')
+                    label(for='arrival-before6')  Before 6 am
+                    input#arrival-6to12(type='checkbox' name='arrival-6to12')
+                    label(for='arrival-6to12')  6 am to 12 pm
+                    input#arrival-12to6(type='checkbox' name='arrival-12to6')
+                    label(for='arrival-12to6')  12 pm to 6 pm
+                    input#arrival-after6(type='checkbox' name='arrival-after6')
+                    label(for='arrival-after6')  After 6 pm
+                h4
+                    label(for='boarding-point') BOARDING POINT
+                .boarding-point.filter-tile
+                    input#boarding-point(type='text' name='boarding-point' placeholder='BOARDING POINT')
+                h4
+                    label(for='dropping-point') DROPPING POINT
+                .dropping-point.filter-tile
+                    input#dropping-point(type='text' name='dropping-point' placeholder='DROPPING POINT')
+                h4 AMENITIES
+                .amenities.filter-tile
+                    .amenities-tile
+                    i.fa.fa-solid.fa-wifi
+                    |  Wifi
+                    .amenities-tile
+                    i.fa.fa-solid.fa-charging-station
+                    |  Charging Point
+                    .amenities-tile
+                    i.fa.fa-solid.fa-video
+                    |  Movie
+                    .amenities-tile
+                    i.fa.fa-solid.fa-bed
+                    |  Blankets
+                    .amenities-tile
+                    i.fa.fa-solid.fa-restroom
+                    |  Toilet
+                .filter-tile.booking-tile.hidden
+                    form(action='')
+                    .seat-details
+                        .seat-selection
+                            .seat-booking-details
+                                #booking.booking-header(style='background-color: green; color: #fff;')
+                                    h3(style='font-weight: lighter;') Seat Details
+                                    h3(style='font-weight: lighter;') Price
+                                .booking-content
+                                #booking
+                                    h4 SubTotal
+                                    h4#booking-price
+                    button#submit(type='submit' style='background-color: green;') Buy Tickets
+            
+            #tour-content
+                .head-tile
+                    #bus
+                        span(style='font-weight: bolder') 41 Buses | found
+                    div Departure
+                    div Duration
+                    div Arrival
+                    div Ratings
+                    div Fare
+                    div Seats Available
+
+                .bus-content
+                    .tour-tile
+                        #bus
+                            .column-details
+                                div(style='font-weight: bolder') Shiv Sai
+                                    .boarding AC Sleeper
+                                    .icons
+                                        i.fa.fa-solid.fa-wifi
+                                        i.fa.fa-solid.fa-charging-station
+                                        i.fa.fa-solid.fa-video
+                                        i.fa.fa-solid.fa-bed
+                                        i.fa.fa-solid.fa-restroom
+                        div 
+                            .column-details
+                                div(style='font-weight: bolder ;font-size: 25px;') 20:55
+                                .boarding Karegaon Bus Stand
+                        div 13h 45m
+                        div
+                            .column-details
+                                div(style='font-weight: bolder; font-size: 25px;') 10:55
+                                .arrival-date(style='color:#DA2C43;') 23-Jun
+                                .arrival Kondhali Bus Stand
+                        div
+                            div(style='background-color: green; color: white; width: 80px; padding: 5px 10px;')
+                                i.fa.fa-solid.fa-star
+                                |  4.1
+
+                        div &#x20B9 968
+                        div
+                            .column-details
+                                div 10 
+                    .bottom-bar
+                        #bus-photos Bus Photos
+                        #bus-reviews View Reviews
+                        #view-seatBtn(style='background-color:#B87333;') View Seats
+
+                .review-photo.hidden
+                    .slideshow-container
+                        // Full-width images with number and caption text
+                        .mySlides.fade
+                            img(src='./img/bus/shivshahi-1.jpg')
+                        .mySlides.fade
+                            img(src='./img/bus/shivshahi-2.jpg')
+                        .mySlides.fade
+                            img(src='./img/bus/shivshahi-3.jpg')
+                        .mySlides.fade
+                            img(src='./img/bus/shivshahi-4.jpg')
+                        // Next and previous buttons
+                        a.prev &#x276E;
+                        a.next &#x276F;
+
+                .view-seat.hidden
+                    #front FRONT
+                    .view-seat-container
+                        // ///////////////////////
+                        .left-sitting
+                            h2 DOOR
+                            .pair-seat
+                                #user-seat A1
+                                #user-seat A2
+                            .pair-seat
+                                #user-seat B1
+                                #user-seat B2
+                            .pair-seat
+                                #user-seat C1
+                                #user-seat C2
+                            .pair-seat
+                                #user-seat D1
+                                #user-seat D2
+                            .pair-seat
+                                #user-seat E1
+                                #user-seat E2
+                            .pair-seat
+                                #user-seat F1
+                                #user-seat F2
+                            .pair-seat
+                                #user-seat G1
+                                #user-seat G2
+                            .pair-seat
+                                #user-seat H1
+                                #user-seat H2
+                            .pair-seat
+                                #user-seat I1
+                                #user-seat I2
+                            .pair-seat
+                                #user-seat J1
+                                #user-seat J2
+                        .right-sitting
+                            #user-photo
+                                i.fa.fa-2x.fa-solid.fa-user
+                            .pair-seat
+                                #user-seat A3
+                                #user-seat A4
+                            .pair-seat
+                                #user-seat B3
+                                #user-seat B4
+                            .pair-seat
+                                #user-seat C3
+                                #user-seat C4
+                            .pair-seat
+                                #user-seat D3
+                                #user-seat D4
+                            .pair-seat
+                                #user-seat  E3
+                                #user-seat E4
+                            .pair-seat
+                                #user-seat F3
+                                #user-seat F4
+                            .pair-seat
+                                #user-seat G3
+                                #user-seat G4
+                            .pair-seat
+                                #user-seat H3
+                                #user-seat H4
+                            .pair-seat
+                                #user-seat I3
+                                #user-seat I4
+                            .pair-seat
+                                #user-seat J3
+                                #user-seat J4
+                    #front REAR
+        script(type='module' src='./js/tour.js')

@@ -27,6 +27,7 @@ exports.getAll = catchAsync(async function (req, res, next) {
 
 exports.getCityBus = catchAsync(async function (req, res, next) {
   let { busDepartureCity, busArrivalCity, date } = req.body;
+  console.log("BODY", req.body);
   busDepartureCity = busDepartureCity.toLowerCase();
   busArrivalCity = busArrivalCity.toLowerCase();
   if (!busDepartureCity || !busArrivalCity) return new AppErr("Please Enter Valid From and To Places", 400);
@@ -39,13 +40,8 @@ exports.getCityBus = catchAsync(async function (req, res, next) {
       $and: [{ busValidFrom: { $lte: new Date(date) } }, { busValidTo: { $gte: new Date(date) } }],
     })
     .populate({ path: "reviews" });
-  res.status(200).json({
-    status: "success",
-    data: {
-      result: docs.length,
-      docs,
-    },
-  });
+  req.docs = docs;
+  return next();
 });
 
 exports.updateBus = catchAsync(async function (req, res, next) {
@@ -65,5 +61,25 @@ exports.deleteBus = catchAsync(async function (req, res, next) {
   res.status(204).json({
     status: "succeess",
     data: { doc },
+  });
+});
+
+exports.getCityBusAPI = catchAsync(async function (req, res, next) {
+  let { busDepartureCity, busArrivalCity, date } = req.body;
+  busDepartureCity = busDepartureCity.toLowerCase();
+  busArrivalCity = busArrivalCity.toLowerCase();
+  if (!busDepartureCity || !busArrivalCity) return new AppErr("Please Enter Valid From and To Places", 400);
+  let docs = Bus.find({
+    busDepartureCity,
+    busArrivalCity,
+  });
+  docs = await docs
+    .find({
+      $and: [{ busValidFrom: { $lte: new Date(date) } }, { busValidTo: { $gte: new Date(date) } }],
+    })
+    .populate({ path: "reviews" });
+  res.status(200).json({
+    status: "success",
+    data: { result: docs.length, docs },
   });
 });
