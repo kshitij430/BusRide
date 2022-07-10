@@ -12,7 +12,7 @@ const getTimeDistance = async function (doc) {
   );
   const { travelDistance, travelDuration } = (await timeDistanceRes.json()).resourceSets[0].resources[0].results[0];
   //   travelDistance in km and travelDuration in minutes.
-  return { travelDistance, travelDuration: travelDuration / 60 };
+  return { travelDistance, travelDuration: Math.round(travelDuration / 60) };
 };
 
 exports.saveTimeDistance = async function (doc) {

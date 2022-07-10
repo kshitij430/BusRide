@@ -1,9 +1,10 @@
 "use strict";
 import { login, signup, logout } from "./login.js";
-import { findBus } from "./findBus.js";
+import "./bus.js";
 const loginForm = document.querySelector(".login--form");
 const signupForm = document.querySelector(".signup--form");
 const logoutBtn = document.querySelector("#logout");
+const date = document.getElementById("date");
 
 if (loginForm) {
   loginForm.addEventListener("submit", async (e) => {
@@ -28,4 +29,9 @@ if (logoutBtn) {
   logoutBtn.addEventListener("click", async (e) => {
     await logout();
   });
+}
+
+if (date) {
+  const today = new Date().toISOString().split("T")[0];
+  date.setAttribute("min", today);
 }

@@ -37,7 +37,6 @@ exports.signup = catchAsync(async function (req, res, next) {
     confirmPassword: req.body.confirmPassword,
     role: req.body.role,
   });
-  console.log(doc);
   // create token
   const token = doc.createValidationToken();
   // save token and expiry time to the document

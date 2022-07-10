@@ -1,15 +1,14 @@
 extends base
 block content
-    - console.log("OUR BUSES",buses)
     section#filter-content
         .background-color-container
             .filter
                 .tour-result
-                    h4 Pune
+                    h4(id='busDepartureCity')= buses[0].busDepartureCity.toUpperCase()
                     span
                         i.fa.fa-light.fa-arrow-right
-                    h4 Nagpur
-                    h4 21 June | Tuesday
+                    h4(id='busArrivalCity')= buses[0].busArrivalCity.toUpperCase()
+                    h4(id='busDate')= `${moment(searchedDate).format("LL").toUpperCase()}`
                 h4#filter-head
                     span
                         i.fa.fa-solid.fa-filter  
@@ -17,14 +16,14 @@ block content
                     span#border
                 h4 BUS TYPES
                 .bus-type.filter-tile.filter-tile-flex
-                    input#seater(type='checkbox' name='seater')
-                    label(for='seater')  SEATER 
-                    input#sleeper(type='checkbox' name='sleeper')
-                    label(for='sleeper')  SLEEPER
-                    input#AC(type='checkbox' name='AC')
-                    label(for='AC')  AC
-                    input#NONAC(type='checkbox' name='NONAC')
-                    label(for='NONAC')  NONAC
+                    input#seater(type='checkbox' name='seater', class='busTypeInput globalInput')
+                    label(for='seater', id='busTypeID')  SEATER 
+                    input#sleeper(type='checkbox' name='sleeper', class='busTypeInput globalInput')
+                    label(for='sleeper', id='busTypeID')  SLEEPER
+                    input#AC(type='checkbox' name='AC', class='busTypeInput globalInput')
+                    label(for='AC', id='busTypeID')  AC
+                    input#NONAC(type='checkbox' name='NONAC', class='busTypeInput globalInput')
+                    label(for='NONAC', id='busTypeID')  NONAC
                 h4 DEPARTURE TIME
                 .departure-time.filter-tile.filter-tile-flex
                     input#departure-before6(type='checkbox' name='departure-before6')
@@ -55,21 +54,30 @@ block content
                     input#dropping-point(type='text' name='dropping-point' placeholder='DROPPING POINT')
                 h4 AMENITIES
                 .amenities.filter-tile
-                    .amenities-tile
-                    i.fa.fa-solid.fa-wifi
-                    |  Wifi
-                    .amenities-tile
-                    i.fa.fa-solid.fa-charging-station
-                    |  Charging Point
-                    .amenities-tile
-                    i.fa.fa-solid.fa-video
-                    |  Movie
-                    .amenities-tile
-                    i.fa.fa-solid.fa-bed
-                    |  Blankets
-                    .amenities-tile
-                    i.fa.fa-solid.fa-restroom
-                    |  Toilet
+                    input#wifi(type='checkbox' name='wifi', class='amn-tile globalInput')
+                    label(for="wifi") 
+                        i.fa.fa-solid.fa-wifi
+                        |  Wifi
+                    .amneites-tile
+                    input#chargin-station(type='checkbox' name='charging-station', class='amn-tile globalInput')
+                    label(for="chargin-station") 
+                        i.fa.fa-solid.fa-charging-station
+                        |  Charging Point
+                    .amneites-tile
+                    input#video(type='checkbox' name='video', class='amn-tile globalInput')
+                    label(for="video") 
+                        i.fa.fa-solid.fa-video
+                        |  Movie
+                    .amneites-tile
+                    input#bed(type='checkbox' name='bed', class='amn-tile globalInput')
+                    label(for="bed") 
+                        i.fa.fa-solid.fa-bed
+                        |  Blankets
+                    .amneites-tile
+                    input#restroom(type='checkbox' name='restroom', class='amn-tile globalInput')
+                    label(for="restroom") 
+                        i.fa.fa-solid.fa-restroom
+                        |  Toilet
                 .filter-tile.booking-tile.hidden
                     form(action='')
                     .seat-details
@@ -87,49 +95,63 @@ block content
             #tour-content
                 .head-tile
                     #bus
-                        span(style='font-weight: bolder') 41 Buses | found
+                        span(style='font-weight: bolder')= `Buses Found (${buses.length}) `
                     div Departure
                     div Duration
                     div Arrival
                     div Ratings
                     div Fare
                     div Seats Available
+                each bus in buses
+                    .bus-content
+                        .tour-tile
+                            #bus
+                                .column-details
+                                    div(style='font-weight: bolder')= bus.busName
+                                        .boarding= bus.busType
+                                        .icons
+                                            - for(const amn of bus.busAmneties) {
+                                                - if(amn === "wifi"){
+                                                    i.fa.fa-solid.fa-wifi
+                                                -}
+                                                - if(amn === "charging-station"){
+                                                    i.fa.fa-solid.fa-charging-station
+                                                -}
+                                                - if(amn === "bed"){
+                                                    i.fa.fa-solid.fa-bed
+                                                -}
+                                                - if(amn === "video"){
+                                                    i.fa.fa-solid.fa-video
+                                                -}
+                                                - if(amn === "restroom"){
+                                                    i.fa.fa-solid.fa-restroom
+                                                -}
+                                            - }
+                                            
+                            div 
+                                .column-details
+                                    div(style='font-weight: bolder ;font-size: 25px;')= bus.busDepartureTime 
+                                    .boarding= bus.busBoardingLocation.toUpperCase()
+                            div=  `${bus.busTravelDuration}Hrs`
+                            div
+                                .column-details
+                                    div(style='font-weight: bolder; font-size: 25px;')= bus.busArrivalTime
+                                    .arrival-date(style='color:#DA2C43;')= `${moment(bus.busArrivalDate).format("LL").toUpperCase()}`
+                                    .arrival= bus.busDroppingLocation.toUpperCase()
+                            div
+                                div(style='background-color: green; color: white; width: 80px; padding: 5px 10px;')
+                                    i.fa.fa-solid.fa-star
+                                    span= `${bus.busRatingsAverage ? bus.busRatingsAverage : "NA"}`
 
-                .bus-content
-                    .tour-tile
-                        #bus
-                            .column-details
-                                div(style='font-weight: bolder') Shiv Sai
-                                    .boarding AC Sleeper
-                                    .icons
-                                        i.fa.fa-solid.fa-wifi
-                                        i.fa.fa-solid.fa-charging-station
-                                        i.fa.fa-solid.fa-video
-                                        i.fa.fa-solid.fa-bed
-                                        i.fa.fa-solid.fa-restroom
-                        div 
-                            .column-details
-                                div(style='font-weight: bolder ;font-size: 25px;') 20:55
-                                .boarding Karegaon Bus Stand
-                        div 13h 45m
-                        div
-                            .column-details
-                                div(style='font-weight: bolder; font-size: 25px;') 10:55
-                                .arrival-date(style='color:#DA2C43;') 23-Jun
-                                .arrival Kondhali Bus Stand
-                        div
-                            div(style='background-color: green; color: white; width: 80px; padding: 5px 10px;')
-                                i.fa.fa-solid.fa-star
-                                |  4.1
-
-                        div &#x20B9 968
-                        div
-                            .column-details
-                                div 10 
-                    .bottom-bar
-                        #bus-photos Bus Photos
-                        #bus-reviews View Reviews
-                        #view-seatBtn(style='background-color:#B87333;') View Seats
+                            div &#x20B9 
+                                span=`${bus.busFare}`
+                            div
+                                .column-details
+                                    div= bus.busSeatsAvailable  
+                        .bottom-bar
+                            #bus-photos Bus Photos
+                            #bus-reviews View Reviews
+                            #view-seatBtn(style='background-color:#B87333;') View Seats
 
                 .review-photo.hidden
                     .slideshow-container

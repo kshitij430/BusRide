@@ -3,6 +3,7 @@ const path = require("path");
 const Bus = require(path.join(__dirname, "..", "model", "busModel"));
 const catchAsync = require(path.join(__dirname, "..", "utils", "catchAsync"));
 const AppErr = require(path.join(__dirname, "..", "utils", "AppErr"));
+const timeDistance = require(path.join(__dirname, "..", "utils", "timeDistance"));
 
 exports.addBus = catchAsync(async function (req, res, next) {
   const doc = await Bus.create(req.body);
@@ -27,10 +28,12 @@ exports.getAll = catchAsync(async function (req, res, next) {
 
 exports.getCityBus = catchAsync(async function (req, res, next) {
   let { busDepartureCity, busArrivalCity, date } = req.body;
-  console.log("BODY", req.body);
   busDepartureCity = busDepartureCity.toLowerCase();
   busArrivalCity = busArrivalCity.toLowerCase();
-  if (!busDepartureCity || !busArrivalCity) return new AppErr("Please Enter Valid From and To Places", 400);
+  // TODO: give proper error for empty inputs
+  if (!busDepartureCity || !busArrivalCity || !date) {
+    return next(new AppErr("Please Enter Valid From and To Places", 400));
+  }
   let docs = Bus.find({
     busDepartureCity,
     busArrivalCity,
@@ -40,7 +43,11 @@ exports.getCityBus = catchAsync(async function (req, res, next) {
       $and: [{ busValidFrom: { $lte: new Date(date) } }, { busValidTo: { $gte: new Date(date) } }],
     })
     .populate({ path: "reviews" });
+
+  // TODO: give proper error for no results found
+  if (docs.length === 0) return next(new AppErr("No Results Found", 400));
   req.docs = docs;
+  req.searchedDate = date;
   return next();
 });
 
@@ -65,7 +72,7 @@ exports.deleteBus = catchAsync(async function (req, res, next) {
 });
 
 exports.getCityBusAPI = catchAsync(async function (req, res, next) {
-  let { busDepartureCity, busArrivalCity, date } = req.body;
+  let { busDepartureCity, busArrivalCity, date, filter } = req.body;
   busDepartureCity = busDepartureCity.toLowerCase();
   busArrivalCity = busArrivalCity.toLowerCase();
   if (!busDepartureCity || !busArrivalCity) return new AppErr("Please Enter Valid From and To Places", 400);
@@ -73,11 +80,18 @@ exports.getCityBusAPI = catchAsync(async function (req, res, next) {
     busDepartureCity,
     busArrivalCity,
   });
-  docs = await docs
+  docs = docs
     .find({
       $and: [{ busValidFrom: { $lte: new Date(date) } }, { busValidTo: { $gte: new Date(date) } }],
     })
     .populate({ path: "reviews" });
+  if (filter?.busTypeArr?.length >= 1) {
+    docs.find({ busType: { $in: filter.busTypeArr } });
+  }
+  if (filter?.busAmnetiesArr?.length >= 1) {
+    docs.find({ busAmneties: { $all: filter.busAmnetiesArr } });
+  }
+  docs = await docs;
   res.status(200).json({
     status: "success",
     data: { result: docs.length, docs },

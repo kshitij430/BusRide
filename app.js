@@ -16,6 +16,8 @@ app.set("views", path.join(__dirname, "views"));
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.locals.moment = require("moment");
+
 // parse application/json
 app.use(bodyParser.json());
 

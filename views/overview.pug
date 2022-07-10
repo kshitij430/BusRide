@@ -3,7 +3,7 @@ block content
     section#main-content
         .search-bus
             form.city--form(action='/busTour' method='post')
-                input(type='text' id = 'busDepartureCity', name='busDepartureCity' placeholder='From')
-                input(type='text' id = 'busArrivalCity' ,name='busArrivalCity' placeholder='To')
-                input(type='date' id = 'date' ,name='date')
+                input(type='text' id = 'busDepartureCity', name='busDepartureCity' placeholder='From', value='pune')
+                input(type='text' id = 'busArrivalCity' ,name='busArrivalCity' placeholder='To', value='nagpur')
+                input(type='date' id = 'date' ,name='date', value='2022-08-06')
                 button#submitBtn(type='submit') Submit

@@ -12,12 +12,23 @@ exports.signup = catchAsync(async (req, res, next) => {
 });
 
 exports.busTour = catchAsync(async (req, res, next) => {
-  console.log("MY BUSES", req.docs);
-  // if (buses.length === 0) return console.log("NO RESULTS FOUND!!");
-  res.status(200).render("busTour", { subTitle: "Available Tours", buses: req.docs });
+  // ///////////////////////////////////////////////
+  req.docs.forEach((el) => {
+    let userInputedDate = new Date(req.searchedDate);
+    let arrivalTime = Number(el.busDepartureTime.split(":")[0]);
+    for (let i = 1; i <= Math.round(el.busTravelDuration); i++) {
+      if (arrivalTime >= 24) {
+        userInputedDate.setDate(userInputedDate.getDate() + 1);
+        arrivalTime = 0;
+      }
+      arrivalTime += 1;
+    }
+    el.busArrivalDate = userInputedDate;
+  });
+  // ///////////////////////////////////////////////////
+  res.status(200).render("busTour", { subTitle: "Available Tours", buses: req.docs, searchedDate: req.searchedDate });
 });
 
 exports.overview = catchAsync(async (req, res, next) => {
-  console.log(req.body);
   res.status(200).render("overview", { subTitle: "Overview" });
 });

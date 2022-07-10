@@ -75,7 +75,7 @@ const busSchema = new mongoose.Schema(
     },
     busAmneties: {
       type: [String],
-      enum: ["wifi", "charging", "movie", "blanket", "wc"],
+      enum: ["wifi", "charging-station", "video", "bed", "restroom"],
       required: [true, "Please Input Valid Amneties"],
     },
     busPhotos: {
