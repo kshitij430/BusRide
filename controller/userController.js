@@ -40,6 +40,7 @@ exports.signup = catchAsync(async function (req, res, next) {
   // create token
   const token = doc.createValidationToken();
   // save token and expiry time to the document
+  await doc.save({ validateModifiedOnly: true });
   const url = `${req.protocol}://${req.get("host")}/api/v1/user/verifyUser/${token}`;
   await new Email(doc, url).send("Please Verify your Email Address");
   res.status(200).json({
@@ -60,11 +61,13 @@ exports.login = catchAsync(async function (req, res, next) {
 
   // 2) check if the user exists in the db and get password from db as we have set select:false while querying any user
   const user = await User.findOne({ email }).select("+password");
-
+  if (!user) {
+    return next(new AppErr("User or Password is incorrect", 401));
+  }
   // TODO: 3) check if email is verified or not
   if (!user.isEmailVerified) return next(new AppErr("An Email has been sent, Please Verify Email Address", 400));
   // 4) validate password using brypt
-  if (!user || !(await user.correctPassword(password, user.password))) {
+  if (!(await user.correctPassword(password, user.password))) {
     return next(new AppErr("User or Password is incorrect", 401));
   }
   generateToken(user, req, res);

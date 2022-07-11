@@ -4,7 +4,7 @@ const Bus = require(path.join(__dirname, "..", "model", "busModel"));
 const catchAsync = require(path.join(__dirname, "..", "utils", "catchAsync"));
 const AppErr = require(path.join(__dirname, "..", "utils", "AppErr"));
 const timeDistance = require(path.join(__dirname, "..", "utils", "timeDistance"));
-
+const moment = require("moment");
 exports.addBus = catchAsync(async function (req, res, next) {
   const doc = await Bus.create(req.body);
   res.status(200).json({
@@ -38,12 +38,15 @@ exports.getCityBus = catchAsync(async function (req, res, next) {
     busDepartureCity,
     busArrivalCity,
   });
-  docs = await docs
+  docs = docs
     .find({
       $and: [{ busValidFrom: { $lte: new Date(date) } }, { busValidTo: { $gte: new Date(date) } }],
     })
     .populate({ path: "reviews" });
-
+  if (new Date(date).getDate() === new Date().getDate()) {
+    docs = docs.find({ busDepartureTime: { $gte: new Date().getDate() } });
+  }
+  docs = await docs;
   // TODO: give proper error for no results found
   if (docs.length === 0) return next(new AppErr("No Results Found", 400));
   req.docs = docs;
@@ -72,7 +75,9 @@ exports.deleteBus = catchAsync(async function (req, res, next) {
 });
 
 exports.getCityBusAPI = catchAsync(async function (req, res, next) {
+  // date in req.body will show prev date but if you check .getDate() on it is shows current date
   let { busDepartureCity, busArrivalCity, date, filter } = req.body;
+  date = moment(new Date(date)).format("YYYY-MM-DD");
   busDepartureCity = busDepartureCity.toLowerCase();
   busArrivalCity = busArrivalCity.toLowerCase();
   if (!busDepartureCity || !busArrivalCity) return new AppErr("Please Enter Valid From and To Places", 400);
@@ -80,16 +85,36 @@ exports.getCityBusAPI = catchAsync(async function (req, res, next) {
     busDepartureCity,
     busArrivalCity,
   });
+
   docs = docs
     .find({
-      $and: [{ busValidFrom: { $lte: new Date(date) } }, { busValidTo: { $gte: new Date(date) } }],
+      $and: [{ busValidFrom: { $lte: date } }, { busValidTo: { $gte: date } }],
     })
     .populate({ path: "reviews" });
   if (filter?.busTypeArr?.length >= 1) {
-    docs.find({ busType: { $in: filter.busTypeArr } });
+    docs = docs.find({ busType: { $in: filter.busTypeArr } });
   }
   if (filter?.busAmnetiesArr?.length >= 1) {
-    docs.find({ busAmneties: { $all: filter.busAmnetiesArr } });
+    docs = docs.find({ busAmneties: { $all: filter.busAmnetiesArr } });
+  }
+  if (filter?.busDepartureArr?.length >= 1) {
+    for (const time of filter.busDepartureArr) {
+      if (time === "18") {
+        docs = docs.find({ busDepartureTime: { $gte: time } });
+      }
+      if (time === "06") {
+        docs = docs.find({ busDepartureTime: { $lte: time } });
+      }
+      if (time === "06to12") {
+        docs = docs.find({ $and: [{ busDepartureTime: { $gte: "06" } }, { busDepartureTime: { $lte: "12" } }] });
+      }
+      if (time === "12to18") {
+        docs = docs.find({ $and: [{ busDepartureTime: { $gte: "12" } }, { busDepartureTime: { $lte: "18" } }] });
+      }
+    }
+  }
+  if (new Date(date).getDate() === new Date().getDate()) {
+    docs = docs.find({ busDepartureTime: { $gte: new Date().getDate() } });
   }
   docs = await docs;
   res.status(200).json({

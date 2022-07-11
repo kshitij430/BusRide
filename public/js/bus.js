@@ -1,10 +1,13 @@
 "use strict";
 const busTypeInputArr = document.querySelectorAll(".busTypeInput");
 const busAmnetiesInputArr = document.querySelectorAll(".amn-tile");
+const busDepartureInputArr = document.querySelectorAll(".busDepartureInput");
 const tourContent = document.querySelector("#tour-content");
 const globalInput = document.querySelectorAll(".globalInput");
 let busTypeArr = [];
 let busAmnetiesArr = [];
+let busDepartureArr = [];
+let busArrivalArr = [];
 if (busTypeInputArr) {
   busTypeInputArr.forEach((inp) => {
     inp.addEventListener("click", async () => {
@@ -27,6 +30,20 @@ if (busAmnetiesInputArr) {
         if (el.checked) {
           const type = el.getAttribute("id").toLowerCase();
           busAmnetiesArr.push(type);
+        }
+      });
+    });
+  });
+}
+
+if (busDepartureInputArr) {
+  busDepartureInputArr.forEach((el) => {
+    el.addEventListener("click", async () => {
+      busDepartureArr = [];
+      busDepartureInputArr.forEach((el) => {
+        if (el.checked) {
+          const type = el.getAttribute("id").toLowerCase().split("-").at(-1);
+          busDepartureArr.push(type);
         }
       });
     });
@@ -67,7 +84,7 @@ const renderBuses = function (buses) {
       <div id="bus">
         <div class="column-details">
           <div style="font-weight: bolder">${bus.busName}</div>
-          <div class="boarding">${bus.busType}</div>
+          <div class="boarding" style="font-weight: bolder">${bus.busType}</div>
           <div class="icons">
             ${(function () {
               let str = "";
@@ -133,7 +150,14 @@ const renderBuses = function (buses) {
   return html;
 };
 
-const filterGetBuses = async function (busDepartureCity, busArrivalCity, date, busTypeArr, busAmnetiesArr) {
+const filterGetBuses = async function (
+  busDepartureCity,
+  busArrivalCity,
+  date,
+  busTypeArr,
+  busAmnetiesArr,
+  busDepartureArr
+) {
   try {
     const res = await axios({
       method: "post",
@@ -145,6 +169,7 @@ const filterGetBuses = async function (busDepartureCity, busArrivalCity, date, b
         filter: {
           busTypeArr,
           busAmnetiesArr,
+          busDepartureArr,
         },
       },
     });
@@ -160,8 +185,15 @@ if (globalInput) {
     el.addEventListener("click", async () => {
       const busDepartureCity = document.querySelector("#busDepartureCity").textContent.toLowerCase();
       const busArrivalCity = document.querySelector("#busArrivalCity").textContent.toLowerCase();
-      const date = new Date(document.querySelector("#busDate").textContent);
-      let buses = await filterGetBuses(busDepartureCity, busArrivalCity, date, busTypeArr, busAmnetiesArr);
+      let date = document.querySelector("#busDate").textContent;
+      let buses = await filterGetBuses(
+        busDepartureCity,
+        busArrivalCity,
+        date,
+        busTypeArr,
+        busAmnetiesArr,
+        busDepartureArr
+      );
       buses = addArrivalDate(buses.data.data.docs, date);
       tourContent.innerHTML = "";
       const html = renderBuses(buses);

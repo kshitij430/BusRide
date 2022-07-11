@@ -26,24 +26,15 @@ block content
                     label(for='NONAC', id='busTypeID')  NONAC
                 h4 DEPARTURE TIME
                 .departure-time.filter-tile.filter-tile-flex
-                    input#departure-before6(type='checkbox' name='departure-before6')
-                    label(for='departure-before6')  Before 6 am
-                    input#departure-6to12(type='checkbox' name='departure-6to12')
-                    label(for='departure-6to12')  6 am to 12 pm
-                    input#departure-12to6(type='checkbox' name='departure-12to6')
-                    label(for='departure-12to6')  12 pm to 6 pm
-                    input#departure-after6(type='checkbox' name='departure-after6')
-                    label(for='departure-after6')  After 6 pm
-                h4 ARRIVAL TIME
-                .arrival-time.filter-tile.filter-tile-flex
-                    input#arrival-before6(type='checkbox' name='arrival-before6')
-                    label(for='arrival-before6')  Before 6 am
-                    input#arrival-6to12(type='checkbox' name='arrival-6to12')
-                    label(for='arrival-6to12')  6 am to 12 pm
-                    input#arrival-12to6(type='checkbox' name='arrival-12to6')
-                    label(for='arrival-12to6')  12 pm to 6 pm
-                    input#arrival-after6(type='checkbox' name='arrival-after6')
-                    label(for='arrival-after6')  After 6 pm
+                    input#departure-before-06(type='checkbox' name='departure-before-06' class='busDepartureInput globalInput')
+                    label(for='departure-before-06')  Before 6 am
+                    input#departure-06to12(type='checkbox' name='departure-06to12'  class='busDepartureInput globalInput')
+                    label(for='departure-06to12')  6 am to 12 pm
+                    input#departure-12to18(type='checkbox' name='departure-12to18'  class='busDepartureInput globalInput')
+                    label(for='departure-12to18')  12 pm to 6 pm
+                    input#departure-after-18(type='checkbox' name='departure-after-18'  class='busDepartureInput globalInput')
+                    label(for='departure-after-18')  After 6 pm
+
                 h4
                     label(for='boarding-point') BOARDING POINT
                 .boarding-point.filter-tile

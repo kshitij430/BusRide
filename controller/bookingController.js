@@ -17,10 +17,10 @@ exports.createSession = catchAsync(async (req, res, next) => {
     client_reference_id: req.params.busID,
     line_items: [
       {
-        name: `NAME`,
-        description: "DESCRIPTION",
-        amount: bus.busFare,
-        currency: "inr",
+        currency: "usd",
+        amount: 500,
+        name: "kshitij",
+        quantity: 1,
       },
     ],
   });
