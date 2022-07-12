@@ -10,6 +10,7 @@ router.use(userController.isLoggedIn);
 router.get("/", renderController.overview);
 router.get("/login", renderController.login);
 router.get("/signup", renderController.signup);
+router.get("/profile", renderController.profile);
 router.post("/busTour", busController.getCityBus, renderController.busTour);
 
 module.exports = router;

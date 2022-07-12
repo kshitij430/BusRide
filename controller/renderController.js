@@ -13,6 +13,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 
 exports.busTour = catchAsync(async (req, res, next) => {
   // ///////////////////////////////////////////////
+  if (!req.docs.length) return res.status(200).render("error", { subTitle: "Not Found" });
   req.docs.forEach((el) => {
     let userInputedDate = new Date(req.searchedDate);
     let arrivalTime = Number(el.busDepartureTime.split(":")[0]);
@@ -31,4 +32,8 @@ exports.busTour = catchAsync(async (req, res, next) => {
 
 exports.overview = catchAsync(async (req, res, next) => {
   res.status(200).render("overview", { subTitle: "Overview" });
+});
+
+exports.profile = catchAsync(async (req, res, next) => {
+  res.status(200).render("profile", { subTitle: "My Profile" });
 });

@@ -43,13 +43,13 @@ const busSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please Input Valid Boarding Location, (pune city -> Sangamwadi)"],
       minlength: 3,
-      maxlength: 20,
+      maxlength: 50,
     },
     busDroppingLocation: {
       type: String,
       required: [true, "Please Input Valid Dropping Location, (mumbai city -> santacruz)"],
       minlength: 3,
-      maxlength: 20,
+      maxlength: 50,
     },
     busValidFrom: {
       type: Date,
@@ -86,6 +86,11 @@ const busSchema = new mongoose.Schema(
     },
     busRatingsQuantity: {
       type: Number,
+    },
+    user: {
+      type: mongoose.Schema.ObjectId,
+      ref: "User",
+      required: [true, "each bus must have an operator"],
     },
   },
   // related to making virtual fields work

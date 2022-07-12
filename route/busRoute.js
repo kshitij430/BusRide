@@ -11,6 +11,7 @@ const busController = require(path.join(__dirname, "..", "controller", "busContr
 const userController = require(path.join(__dirname, "..", "controller", "userController"));
 const reviewRouter = require(path.join(__dirname, "reviewRoute"));
 router.get("/getAll", busController.getAll);
+router.post("/operatorBus", busController.operatorBus);
 router.post("/getCityBusAPI", busController.getCityBusAPI);
 
 router.use("/:busID/reviews", reviewRouter);

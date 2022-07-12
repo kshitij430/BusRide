@@ -5,6 +5,7 @@ const catchAsync = require(path.join(__dirname, "..", "utils", "catchAsync"));
 const AppErr = require(path.join(__dirname, "..", "utils", "AppErr"));
 const timeDistance = require(path.join(__dirname, "..", "utils", "timeDistance"));
 const moment = require("moment");
+
 exports.addBus = catchAsync(async function (req, res, next) {
   const doc = await Bus.create(req.body);
   res.status(200).json({
@@ -17,6 +18,18 @@ exports.addBus = catchAsync(async function (req, res, next) {
 
 exports.getAll = catchAsync(async function (req, res, next) {
   const docs = await Bus.find({}).populate({ path: "reviews" });
+  res.status(200).json({
+    status: "success",
+    data: {
+      result: docs.length,
+      docs,
+    },
+  });
+});
+
+exports.operatorBus = catchAsync(async function (req, res, next) {
+  const { id } = req.body;
+  const docs = await Bus.find({ user: id }).populate({ path: "reviews" });
   res.status(200).json({
     status: "success",
     data: {
@@ -48,7 +61,6 @@ exports.getCityBus = catchAsync(async function (req, res, next) {
   }
   docs = await docs;
   // TODO: give proper error for no results found
-  if (docs.length === 0) return next(new AppErr("No Results Found", 400));
   req.docs = docs;
   req.searchedDate = date;
   return next();

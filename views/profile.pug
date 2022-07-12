@@ -1,0 +1,78 @@
+extends base
+block content
+    section#main-content
+        .profile__container
+            .profile__sidebar--left
+                h2#user-name(data-operatorID= user._id)= `${user.name.toUpperCase()}`
+                    span
+                if user.role === "admin"            
+                    h4#view-bus
+                        span
+                        i.fa.fa-solid.fa-street-view
+                        |  VIEW ALL CREATED BUSES
+                    #profile__border
+                    h4.clicked#create-bus
+                        span
+                        i.fa.fa-solid.fa-bus
+                        |  CREATE A BUS
+                else 
+                    h4#booked-tickets.clicked
+                        span
+                        i.fa.fa-solid.fa-street-view
+                        |  BOOKED TICKETS
+                    #profile__border
+            #profile__border
+            if user.role === "admin" 
+                .profile__sidebar--rightView.hidden
+                .profile__sidebar--right
+                    form.form.profile__form()
+                        h1 CREATE A BUS
+                        label(for='name') Bus Name
+                        input#name.form__input(name='name' type='text')
+                        label(for='busDepCity') Bus Departure City
+                        div#the-basics
+                            input#busDepCity.form__input(name='busDepCity' type='text' placeholder='pune' class="typeahead")
+                        label(for='busArrvCity') Bus Arrival City
+                        div#the-basics
+                            input#busArrvCity.form__input(name='busArrvCity' type='text' placeholder='nagpur' class="typeahead")
+                        label(for='busBoardingLoc') Bus Boarding Location
+                        input#busBoardingLoc.form__input(name='busBoardingLoc' type='text' placeholder='pune station bus stand')
+                        label(for='busDroppingLoc') Bus Dropping Location
+                        input#busDroppingLoc.form__input(name='busDroppingLoc' type='text' placeholder='ST bus stand nagpur')
+                        label(for='busDepartTime') Bus Departure Time
+                        input#busDepartTime.form__input(name='busDepartTime' type='text' placeholder='19:30')
+                        label(for='fromDate') From
+                        input#fromDate(type='date' name='fromDate')
+                        label(for='toDate') To
+                        input#toDate(type='date' name='toDate')
+                        //- BUS FARE
+                        label(for='fare') Fare
+                        input#fare(type='number' name='fare' min='100' max='5000')
+                        //- BUS TYPE
+                        #profile__form--busType
+                            p Bus Type
+                            input#busType1(type='radio' name='contact' value='seater' class='busType')
+                            label#profile__form--label(for='busType1') Seater
+                            input#busType2(type='radio' name='contact' value='sleeper' class='busType')
+                            label#profile__form--label(for='busType2') Sleeper
+                            input#busType3(type='radio' name='contact' value='ac' class='busType')
+                            label#profile__form--label(for='busType3') AC
+                            input#busType4(type='radio' name='contact' value='nonac' class='busType')
+                            label#profile__form--label(for='busType4') Non AC
+                        //- BUS AMNETIES
+                        #profile__form--amneties
+                            p Bus Amneties
+                            input#busamn1(type='checkbox' value='wifi' class='busAmn')
+                            label#profile__form--label(for='busamn1') Wifi
+                            input#busamn2(type='checkbox' value='video' class='busAmn')
+                            label#profile__form--label(for='busamn2') Video
+                            input#busamn3(type='checkbox' value='bed' class='busAmn')
+                            label#profile__form--label(for='busamn3') Bed
+                            input#busamn4(type='checkbox' value='restroom' class='busAmn')
+                            label#profile__form--label(for='busamn4') Restroom
+                            input#busamn5(type='checkbox' value='charging-station' class='busAmn')
+                            label#profile__form--label(for='busamn5') Charging Station
+                        //- SUBMIT BUTTON
+                        button#submit(type='submit') Submit
+            else 
+                h4 BOOKED TICKETS

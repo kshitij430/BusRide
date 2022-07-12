@@ -259,7 +259,7 @@ padding-right: 5px;
     margin-bottom: 25px;
 }
 
-.form input{
+.form input[type='text'], .form input[type='date'], form input[type='number'], form input[type='email'], form input[type='password']{
     height: 50px;
     width: 400px;
     padding: 20px;
@@ -267,6 +267,23 @@ padding-right: 5px;
     border: none;
     border: none;
     background-color: #f7f7f7;
+}
+
+input[type="date"]{
+    display: inline-block;
+    position: relative;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
 }
 
 .form__input:focus {
@@ -518,3 +535,61 @@ padding-right: 5px;
     margin: 0;
 }
 
+/* PROFILE CONTAINER STYLING */
+.profile__container{
+    display: flex;
+    cursor: pointer;
+    padding-left:20px ;
+    min-height: 91vh;
+    background-color:#f7f7f7;
+}
+
+.profile__sidebar--left{
+    margin-top: 100px;
+    width: 15vw;
+}
+.profile__sidebar--left h4{
+    padding: 20px 0px;
+    transition: all 0.5s ease-in;
+    font-weight: 100;
+}
+.profile__sidebar--left h2{
+    margin-bottom: 20px;
+}
+.profile__sidebar--left h4:hover{
+    background-color:  RGB(216,216,216);
+}
+.clicked{
+    background-color:  RGB(216,216,216);
+}
+.profile__form{
+    margin: 0;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    min-height: 60vh;
+    margin-left: 200px;
+    min-width: 30vw;
+}
+#profile__border{
+    border: 1px solid #bbb;
+}
+#profile__form--label{
+    margin-right: 20px;
+    margin-left: 10px;
+}
+#profile__form--busType *, #profile__form--amneties *{
+    cursor: pointer;
+}
+
+.profile__sidebar--rightView{
+    padding: 100px;
+}
+
+#error{
+    width: 100vw;
+    height: 91vh;
+    background-color:#f7f7f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

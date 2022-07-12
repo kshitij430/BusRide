@@ -67,7 +67,91 @@ const addArrivalDate = function (buses, searchedDate) {
   return busesArr;
 };
 
-const renderBuses = function (buses) {
+export const renderAdminBuses = function (buses) {
+  let html = `<div class="head-tile">
+  <div id="bus"><span style="font-weight: bolder">Buses Found (${buses.length})</span></div>
+  <div>Departure</div>
+  <div>Duration</div>
+  <div>Arrival</div>
+  <div>Ratings</div>
+  <div>Fare</div>
+  <div>Total Seats</div>
+  <div>Validity</div>
+</div>`;
+  for (const bus of buses) {
+    const subContent = `
+    <div class="bus-content">
+    <div class="tour-tile">
+      <div id="bus">
+        <div class="column-details">
+          <div style="font-weight: bolder">${bus.busName}</div>
+          <div class="boarding" style="font-weight: bolder">${bus.busType}</div>
+          <div class="icons">
+            ${(function () {
+              let str = "";
+              for (const amn of bus.busAmneties) {
+                if (amn === "wifi") {
+                  str += '<i class="fa fa-solid fa-wifi"></i>';
+                }
+                if (amn === "charging-station") {
+                  str += '<i class="fa fa-solid fa-charging-station"></i>';
+                }
+                if (amn === "bed") {
+                  str += '<i class="fa fa-solid fa-video"></i>';
+                }
+                if (amn === "video") {
+                  str += '<i class="fa fa-solid fa-bed"></i>';
+                }
+                if (amn === "restroom") {
+                  str += '<i class="fa fa-solid fa-restroom"></i>';
+                }
+              }
+              return str;
+            })()}
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="column-details">
+          <div style="font-weight: bolder ;font-size: 25px;">${bus.busDepartureTime}</div>
+          <div class="boarding">${bus.busBoardingLocation.toUpperCase()}</div>
+        </div>
+      </div>
+      <div>${bus.busTravelDuration}Hrs</div>
+      <div>
+        <div class="column-details">
+          <div style="font-weight: bolder; font-size: 25px;">${bus.busArrivalTime}</div>
+          <div class="arrival">${bus.busDroppingLocation.toUpperCase()}</div>
+        </div>
+      </div>
+      <div>
+        <div style="background-color: green; color: white; width: 80px; padding: 5px 10px;"> <i
+            class="fa fa-solid fa-star"></i> ${bus.busRatingsAverage ? bus.busRatingsAverage : "NA"}</div>
+      </div>
+      <div> &#x20B9 ${bus.busFare}</div>
+      <div>
+        <div class="column-details">
+          <div>${bus.busSeatsAvailable}</div>
+        </div>
+      </div>
+      <div style='font-weight:bold'>
+      ${moment(bus.busValidFrom).format("LL").toUpperCase()} TO ${moment(bus.busValidTo).format("LL").toUpperCase()}
+      </div>
+    </div>
+    <div class="bottom-bar">
+      <div id="bus-photos">Bus Photos</div>
+      <div id="bus-reviews">View Reviews</div>
+      <div id="view-seatBtn" style="background-color:		#B87333;">VIEW SEATS</div>
+    </div>
+  </div>
+    `;
+    html += subContent;
+  }
+
+  return html;
+};
+
+export const renderBuses = function (buses) {
   let html = `<div class="head-tile">
   <div id="bus"><span style="font-weight: bolder">Buses Found (${buses.length})</span></div>
   <div>Departure</div>
