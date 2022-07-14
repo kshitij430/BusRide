@@ -84,7 +84,7 @@ export const renderAdminBuses = function (buses) {
     <div class="tour-tile">
       <div id="bus">
         <div class="column-details">
-          <div style="font-weight: bolder">${bus.busName}</div>
+          <div id="bus-name" style="font-weight: bolder">${bus.busName}</div>
           <div class="boarding" style="font-weight: bolder">${bus.busType}</div>
           <div class="icons">
             ${(function () {
@@ -134,20 +134,100 @@ export const renderAdminBuses = function (buses) {
           <div>${bus.busSeatsAvailable}</div>
         </div>
       </div>
+      
       <div style='font-weight:bold'>
+      <div style="font-weight: bolder">${bus.busDepartureCity.toUpperCase()} -> ${bus.busArrivalCity.toUpperCase()}</div>
       ${moment(bus.busValidFrom).format("LL").toUpperCase()} TO ${moment(bus.busValidTo).format("LL").toUpperCase()}
       </div>
     </div>
     <div class="bottom-bar">
-      <div id="bus-photos">Bus Photos</div>
-      <div id="bus-reviews">View Reviews</div>
-      <div id="view-seatBtn" style="background-color:		#B87333;">VIEW SEATS</div>
     </div>
   </div>
     `;
     html += subContent;
   }
+  return html;
+};
 
+export const renderUserBuses = function (bookings) {
+  let html = `<div class="head-tile">
+  <div id="bus"><span style="font-weight: bolder">Buses Found (${bookings.length})</span></div>
+  <div>Departure</div>
+  <div>Duration</div>
+  <div>Arrival</div>
+  <div>Ratings</div>
+  <div>Seat Number</div>
+  <div>Departure Date</div>
+</div>`;
+  for (const booking of bookings) {
+    const subContent = `
+    <div class="bus-content">
+    <div class="tour-tile">
+      <div id="bus">
+        <div class="column-details">
+          <div id="bus-name" style="font-weight: bolder">${booking.bus.busName}</div>
+          <div class="boarding" style="font-weight: bolder">${booking.bus.busType}</div>
+          <div class="icons">
+            ${(function () {
+              let str = "";
+              for (const amn of booking.bus.busAmneties) {
+                if (amn === "wifi") {
+                  str += '<i class="fa fa-solid fa-wifi"></i>';
+                }
+                if (amn === "charging-station") {
+                  str += '<i class="fa fa-solid fa-charging-station"></i>';
+                }
+                if (amn === "bed") {
+                  str += '<i class="fa fa-solid fa-video"></i>';
+                }
+                if (amn === "video") {
+                  str += '<i class="fa fa-solid fa-bed"></i>';
+                }
+                if (amn === "restroom") {
+                  str += '<i class="fa fa-solid fa-restroom"></i>';
+                }
+              }
+              return str;
+            })()}
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="column-details">
+          <div style="font-weight: bolder ;font-size: 25px;">${booking.bus.busDepartureTime}</div>
+          <div class="boarding">${booking.bus.busBoardingLocation.toUpperCase()}</div>
+        </div>
+      </div>
+      <div>${booking.bus.busTravelDuration}Hrs</div>
+      <div>
+        <div class="column-details">
+          <div style="font-weight: bolder; font-size: 25px;">${booking.bus.busArrivalTime}</div>
+          <div class="arrival">${booking.bus.busDroppingLocation.toUpperCase()}</div>
+        </div>
+      </div>
+      <div>
+        <div style="background-color: green; color: white; width: 80px; padding: 5px 10px;"> <i
+            class="fa fa-solid fa-star"></i> ${
+              booking.bus.busRatingsAverage ? booking.bus.busRatingsAverage : "NA"
+            }</div>
+      </div>
+      <div>
+        <div class="column-details">
+          <div>${booking.seats}</div>
+        </div>
+      </div>
+      <div>
+        <div class="column-details" style="font-weight: bolder;">
+          <div>${moment(new Date(booking.busDepartureDate)).format("LL")}</div>
+        </div>
+      </div>
+    </div>
+    <div class="bottom-bar">
+    </div>
+  </div>
+    `;
+    html += subContent;
+  }
   return html;
 };
 

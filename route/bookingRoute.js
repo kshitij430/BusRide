@@ -6,5 +6,5 @@ const userController = require(path.join(__dirname, "..", "controller", "userCon
 
 router.use(userController.isLoggedIn);
 router.get("/:busID", bookingController.createSession);
-
+router.post("/getBookingDetails", bookingController.getBookingDetails);
 module.exports = router;

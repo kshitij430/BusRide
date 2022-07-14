@@ -7,6 +7,7 @@ const busSchema = new mongoose.Schema(
     busName: {
       type: String,
       required: [true, "Please Input Valid Bus Name"],
+      enum: ["prasanna", "neeta", "kaleswari", "shivshahi", "srs"],
       minlength: 3,
       maxlength: 20,
     },

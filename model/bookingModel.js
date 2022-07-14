@@ -10,6 +10,14 @@ const bookingSchema = new mongoose.Schema({
     ref: "User",
     required: [true, "Each Booking Should Have a user."],
   },
+  seats: {
+    type: [String],
+    required: true,
+  },
+  busDepartureDate: {
+    type: Date,
+    required: ["true", "Each Booking Should have a Departure Date"],
+  },
   timeStamp: {
     type: Date,
     default: Date.now(),

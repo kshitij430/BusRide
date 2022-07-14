@@ -1,6 +1,7 @@
 "use strict";
 const path = require("path");
 const Bus = require(path.join(__dirname, "..", "model", "busModel"));
+const Booking = require(path.join(__dirname, "..", "model", "bookingModel"));
 const catchAsync = require(path.join(__dirname, "..", "utils", "catchAsync"));
 const AppErr = require(path.join(__dirname, "..", "utils", "AppErr"));
 const timeDistance = require(path.join(__dirname, "..", "utils", "timeDistance"));
@@ -132,5 +133,18 @@ exports.getCityBusAPI = catchAsync(async function (req, res, next) {
   res.status(200).json({
     status: "success",
     data: { result: docs.length, docs },
+  });
+});
+
+exports.getBookedSeats = catchAsync(async function (req, res, next) {
+  let { busDepartureDate } = req.query;
+  busDepartureDate = moment(new Date(busDepartureDate)).format("YYYY-MM-DD");
+  const bus = req.body.busID;
+  const docs = await Booking.find({ bus, busDepartureDate });
+  res.status(200).json({
+    status: "success",
+    data: {
+      docs,
+    },
   });
 });

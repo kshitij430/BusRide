@@ -53,6 +53,7 @@ export const logout = async function () {
       setTimeout(() => location.assign("/"), 2000);
     }
   } catch (err) {
+    console.log(err);
     showAlerts(err, "Unable to logout, Error Occurred!");
   }
 };

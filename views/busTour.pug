@@ -81,7 +81,8 @@ block content
                                 #booking
                                     h4 SubTotal
                                     h4#booking-price
-                    button#submit(type='submit' style='background-color: green;') Buy Tickets
+                    a#book-tourBtn
+                        button#submit(type='submit' style='background-color: green;') Buy Tickets
             
             #tour-content
                 .head-tile
@@ -94,30 +95,30 @@ block content
                     div Fare
                     div Seats Available
                 each bus in buses
-                    .bus-content
+                    .bus-content(data-busID = bus._id)
                         .tour-tile
                             #bus
                                 .column-details
-                                    div(style='font-weight: bolder')= bus.busName
-                                        .boarding= bus.busType
-                                        .icons
-                                            - for(const amn of bus.busAmneties) {
-                                                - if(amn === "wifi"){
-                                                    i.fa.fa-solid.fa-wifi
-                                                -}
-                                                - if(amn === "charging-station"){
-                                                    i.fa.fa-solid.fa-charging-station
-                                                -}
-                                                - if(amn === "bed"){
-                                                    i.fa.fa-solid.fa-bed
-                                                -}
-                                                - if(amn === "video"){
-                                                    i.fa.fa-solid.fa-video
-                                                -}
-                                                - if(amn === "restroom"){
-                                                    i.fa.fa-solid.fa-restroom
-                                                -}
-                                            - }
+                                    div(id='bus-name' style='font-weight: bolder')= bus.busName
+                                    .boarding(style='font-weight: bolder')= bus.busType
+                                    .icons
+                                        - for(const amn of bus.busAmneties) {
+                                            - if(amn === "wifi"){
+                                                i.fa.fa-solid.fa-wifi
+                                            -}
+                                            - if(amn === "charging-station"){
+                                                i.fa.fa-solid.fa-charging-station
+                                            -}
+                                            - if(amn === "bed"){
+                                                i.fa.fa-solid.fa-bed
+                                            -}
+                                            - if(amn === "video"){
+                                                i.fa.fa-solid.fa-video
+                                            -}
+                                            - if(amn === "restroom"){
+                                                i.fa.fa-solid.fa-restroom
+                                            -}
+                                        - }
                                             
                             div 
                                 .column-details
@@ -138,95 +139,9 @@ block content
                                 span=`${bus.busFare}`
                             div
                                 .column-details
-                                    div= bus.busSeatsAvailable  
+                                    div#busSeats= bus.busSeatsAvailable  
                         .bottom-bar
                             #bus-photos Bus Photos
                             #bus-reviews View Reviews
                             #view-seatBtn(style='background-color:#B87333;') View Seats
-
-                .review-photo.hidden
-                    .slideshow-container
-                        //- Full-width images with number and caption text
-                        .mySlides.fade
-                            img(src='./img/bus/shivshahi-1.jpg')
-                        .mySlides.fade
-                            img(src='./img/bus/shivshahi-2.jpg')
-                        .mySlides.fade
-                            img(src='./img/bus/shivshahi-3.jpg')
-                        .mySlides.fade
-                            img(src='./img/bus/shivshahi-4.jpg')
-                        // Next and previous buttons
-                        a.prev &#x276E;
-                        a.next &#x276F;
-
-                .view-seat.hidden
-                    #front FRONT
-                    .view-seat-container
-                        //- ///////////////////////
-                        .left-sitting
-                            h2 DOOR
-                            .pair-seat
-                                #user-seat A1
-                                #user-seat A2
-                            .pair-seat
-                                #user-seat B1
-                                #user-seat B2
-                            .pair-seat
-                                #user-seat C1
-                                #user-seat C2
-                            .pair-seat
-                                #user-seat D1
-                                #user-seat D2
-                            .pair-seat
-                                #user-seat E1
-                                #user-seat E2
-                            .pair-seat
-                                #user-seat F1
-                                #user-seat F2
-                            .pair-seat
-                                #user-seat G1
-                                #user-seat G2
-                            .pair-seat
-                                #user-seat H1
-                                #user-seat H2
-                            .pair-seat
-                                #user-seat I1
-                                #user-seat I2
-                            .pair-seat
-                                #user-seat J1
-                                #user-seat J2
-                        .right-sitting
-                            #user-photo
-                                i.fa.fa-2x.fa-solid.fa-user
-                            .pair-seat
-                                #user-seat A3
-                                #user-seat A4
-                            .pair-seat
-                                #user-seat B3
-                                #user-seat B4
-                            .pair-seat
-                                #user-seat C3
-                                #user-seat C4
-                            .pair-seat
-                                #user-seat D3
-                                #user-seat D4
-                            .pair-seat
-                                #user-seat  E3
-                                #user-seat E4
-                            .pair-seat
-                                #user-seat F3
-                                #user-seat F4
-                            .pair-seat
-                                #user-seat G3
-                                #user-seat G4
-                            .pair-seat
-                                #user-seat H3
-                                #user-seat H4
-                            .pair-seat
-                                #user-seat I3
-                                #user-seat I4
-                            .pair-seat
-                                #user-seat J3
-                                #user-seat J4
-                    #front REAR
         script(type='module' src='./js/tour.js')

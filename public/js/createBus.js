@@ -1,7 +1,7 @@
 "use strict";
 import { showAlerts } from "./showAlerts.js";
 const profileForm = document.querySelector(".profile__form");
-import { renderAdminBuses } from "./bus.js";
+import { renderAdminBuses, renderUserBuses } from "./bus.js";
 
 export const viewBuses = async function (busID) {
   try {
@@ -18,6 +18,24 @@ export const viewBuses = async function (busID) {
   } catch (err) {
     console.log(err);
     showAlerts("error", err.response.data.message);
+  }
+};
+
+export const viewUserBuses = async function (userID) {
+  try {
+    const res = await axios({
+      method: "post",
+      url: "/api/v1/booking/getBookingDetails",
+      data: { user: userID },
+    });
+    if (res.data.status === "success") {
+      const bookings = res.data.data.docs;
+      const html = renderUserBuses(bookings);
+      return html;
+    }
+  } catch (err) {
+    console.log(err);
+    showAlerts("error", err);
   }
 };
 
@@ -48,8 +66,8 @@ export const fetchBusData = function () {
     const busAmnArr = [];
     let busType;
     const busName = document.getElementById("name").value;
-    const busDepartureCity = document.getElementById("busDepCity").value;
-    const busArrivalCity = document.getElementById("busArrvCity").value;
+    const busDepartureCity = document.getElementById("busDepCity").value.toLowerCase();
+    const busArrivalCity = document.getElementById("busArrvCity").value.toLowerCase();
     const busBoardingLocation = document.getElementById("busBoardingLoc").value;
     const busDroppingLocation = document.getElementById("busDroppingLoc").value;
     const busDepartureTime = document.getElementById("busDepartTime").value;

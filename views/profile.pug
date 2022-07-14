@@ -28,7 +28,7 @@ block content
                     form.form.profile__form()
                         h1 CREATE A BUS
                         label(for='name') Bus Name
-                        input#name.form__input(name='name' type='text')
+                        input#name.form__input(name='name' type='text', placeholder='Valid -> ["prasanna", "neeta", "kaleswari", "shivshahi", "srs"]')
                         label(for='busDepCity') Bus Departure City
                         div#the-basics
                             input#busDepCity.form__input(name='busDepCity' type='text' placeholder='pune' class="typeahead")
@@ -75,4 +75,5 @@ block content
                         //- SUBMIT BUTTON
                         button#submit(type='submit') Submit
             else 
-                h4 BOOKED TICKETS
+                .profile__sidebar--rightView
+                    h4 BOOKED TICKETS

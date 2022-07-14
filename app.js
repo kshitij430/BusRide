@@ -41,5 +41,6 @@ app.use("/api/v1/booking", bookingRoute);
 
 // GLOBAL ERROR HANDLER
 app.use(globalErrorHandler);
+//TODO: GLOBAL ERROR RENDER
 
 module.exports = app;

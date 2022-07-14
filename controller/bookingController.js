@@ -9,18 +9,28 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 exports.createSession = catchAsync(async (req, res, next) => {
   // 1) get tour
   const bus = await Bus.findById(req.params.busID);
+  const seats = req.query.seats.split(",");
+  const { busDepartureDate } = req.query;
+  if (!bus) return next(new AppErr("NO BUSES FOUND", 404));
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
-    success_url: `${req.protocol}://${req.get("host")}`,
-    cancel_url: `${req.protocol}://${req.get("host")}/bus/cancel`,
+    success_url: `${req.protocol}://${req.get("host")}?bus=${req.params.busID}&user=${
+      req.user.id
+    }&seats=${seats}&price=${bus.busFare * Number(seats.length)}&busDepartureDate=${busDepartureDate}`,
+    cancel_url: `${req.protocol}://${req.get("host")}/error`,
     customer_email: req.user.email,
     client_reference_id: req.params.busID,
     line_items: [
       {
-        currency: "usd",
-        amount: 500,
-        name: "kshitij",
-        quantity: 1,
+        name: bus.busName.toUpperCase(),
+        description: `from ${bus.busDepartureCity.toUpperCase()} to ${bus.busArrivalCity.toUpperCase()} on ${busDepartureDate}, ${
+          bus.busDepartureTime
+        }
+        `,
+        amount: bus.busFare * 100,
+        // TODO: images after deployment
+        currency: "inr",
+        quantity: seats.length,
       },
     ],
   });
@@ -30,6 +40,17 @@ exports.createSession = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getBookingDetails = catchAsync(async (req, res, next) => {
+  const { user } = req.body;
+  const docs = await Booking.find({ user });
+  res.status(200).json({
+    status: "success",
+    data: {
+      result: docs.length,
+      docs,
+    },
+  });
+});
 // const handleWebhookSession = async (session) => {
 //   console.log(session.customer_email, session.client_reference_id, session.amount_total);
 //   const tour = session.client_reference_id;

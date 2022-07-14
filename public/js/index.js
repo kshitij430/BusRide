@@ -1,7 +1,8 @@
 "use strict";
 import { login, signup, logout } from "./login.js";
 import { substringMatcher, cities } from "./dropDown.js";
-import { viewBuses, fetchBusData } from "./createBus.js";
+import { viewBuses, fetchBusData, viewUserBuses } from "./createBus.js";
+import { renderBusImages } from "./slideshow.js";
 import "./bus.js";
 const loginForm = document.querySelector(".login--form");
 const signupForm = document.querySelector(".signup--form");
@@ -12,7 +13,7 @@ const createBusBtn = document.querySelector("#create-bus");
 const viewBusBtn = document.querySelector("#view-bus");
 const sideBarForm = document.querySelector(".profile__sidebar--right");
 const sideBarView = document.querySelector(".profile__sidebar--rightView");
-
+const bookedTicketsBtn = document.querySelector("#booked-tickets");
 if (loginForm) {
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -58,6 +59,7 @@ if (typeAhead) {
 }
 
 if (createBusBtn || viewBusBtn) {
+  fetchBusData();
   createBusBtn.addEventListener("click", function () {
     viewBusBtn.classList.remove("clicked");
     createBusBtn.classList.add("clicked");
@@ -73,5 +75,20 @@ if (createBusBtn || viewBusBtn) {
     const userID = document.querySelector("#user-name").dataset.operatorid;
     const html = await viewBuses(userID);
     sideBarView.innerHTML = html;
+    const busTileArr = document.querySelectorAll(".bus-content");
+    // CHANGES TO BE MADE FOR ADMIN SIDE
+    renderBusImages(busTileArr);
   });
+}
+
+const getTicektBuses = async function () {
+  console.log(sideBarView);
+  const userID = document.querySelector("#user-name").dataset.operatorid;
+  const html = await viewUserBuses(userID);
+  sideBarView.style.width = "70vw";
+  sideBarView.innerHTML = html;
+};
+
+if (bookedTicketsBtn) {
+  await getTicektBuses();
 }
