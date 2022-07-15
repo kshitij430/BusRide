@@ -34,7 +34,7 @@ class Email {
   }
 
   async send(subject) {
-    const html = pug.renderFile(path.join(__dirname, "..", "views", "verifyUser"), { url: this.url });
+    const html = pug.renderFile(path.join(__dirname, "..", "views", "verifyUser.pug"), { url: this.url });
     const mailOptions = {
       from: process.env.EMAIL_SEND_MAIL,
       to: this.to,

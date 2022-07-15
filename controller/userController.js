@@ -42,7 +42,9 @@ exports.signup = catchAsync(async function (req, res, next) {
   // save token and expiry time to the document
   await doc.save({ validateModifiedOnly: true });
   const url = `https://${req.get("host")}/api/v1/user/verifyUser/${token}`;
-  await new Email(doc, url).send("Please Verify your Email Address");
+  await new Email(doc, url).send(
+    "Please Verify your Email Address, please check spam folder if mail has not been received."
+  );
   res.status(200).json({
     status: "success",
     data: {
