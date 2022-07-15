@@ -14,9 +14,9 @@ exports.createSession = catchAsync(async (req, res, next) => {
   if (!bus) return next(new AppErr("NO BUSES FOUND", 404));
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
-    success_url: `${req.protocol}://${req.get("host")}?bus=${req.params.busID}&user=${
-      req.user.id
-    }&seats=${seats}&price=${bus.busFare * Number(seats.length)}&busDepartureDate=${busDepartureDate}`,
+    success_url: `https://${req.get("host")}?bus=${req.params.busID}&user=${req.user.id}&seats=${seats}&price=${
+      bus.busFare * Number(seats.length)
+    }&busDepartureDate=${busDepartureDate}`,
     cancel_url: `${req.protocol}://${req.get("host")}/error`,
     customer_email: req.user.email,
     client_reference_id: req.params.busID,
