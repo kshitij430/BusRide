@@ -34,7 +34,10 @@ export const signup = async function (name, email, password, confirmPassword, ro
       },
     });
     if (res.data.status === "success") {
-      showAlerts("success", "Please Verify your Email Address");
+      showAlerts(
+        "success",
+        "Please Verify your Email Address, please check spam folder if mail has not been received."
+      );
       setTimeout(() => location.assign("/"), 2000);
     }
   } catch (err) {
