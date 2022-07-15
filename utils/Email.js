@@ -20,6 +20,17 @@ class Email {
     });
   }
 
+  // REAL EMAILS
+  // newTransporter() {
+  //   return nodemailer.createTransport({
+  //     service: "gmail",
+  //     auth: {
+  //       user: process.env.EMAIL_FROM,
+  //       pass: "more1234",
+  //     },
+  //   });
+  // }
+
   async send(subject) {
     const mailOptions = {
       from: process.env.EMAIL_FROM,
