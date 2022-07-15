@@ -26,6 +26,6 @@ mongoose
   });
 
 // LISTEN TO THE SERVER
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 3000, () => {
   console.log(`SERVER IS LISTENING TO THE INCOMING REQUESTS!`);
 });
