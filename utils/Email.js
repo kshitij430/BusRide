@@ -1,5 +1,7 @@
 const nodemailer = require("nodemailer");
 const path = require("path");
+const pug = require("pug");
+const { htmlToText } = require("html-to-text");
 
 class Email {
   constructor(user, url) {
@@ -32,11 +34,12 @@ class Email {
   }
 
   async send(subject) {
+    const html = pug.renderFile(path.join(__dirname, "..", "views", "verifyUser"), { url: this.url });
     const mailOptions = {
       from: process.env.EMAIL_SEND_MAIL,
       to: this.to,
       subject,
-      text: `Please Verify your email address using this url ${this.url}`,
+      text: htmlToText(html),
     };
     await this.newTransporter().sendMail(mailOptions);
   }
