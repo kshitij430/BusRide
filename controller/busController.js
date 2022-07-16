@@ -62,7 +62,7 @@ exports.getCityBus = catchAsync(async function (req, res, next) {
   }
   docs = await docs;
   console.log(docs);
-  console.log(new Date().getHours());
+  console.log(new Date());
   // TODO: give proper error for no results found
   req.docs = docs;
   req.searchedDate = date;
