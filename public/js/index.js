@@ -41,6 +41,7 @@ if (logoutBtn) {
 
 if (date) {
   const today = new Date().toISOString().split("T")[0];
+  date.value = moment(Date.now()).format("YYYY-MM-DD");
   date.setAttribute("min", today);
 }
 
