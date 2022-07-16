@@ -58,11 +58,10 @@ exports.getCityBus = catchAsync(async function (req, res, next) {
     })
     .populate({ path: "reviews" });
   if (new Date(date).getDate() === new Date().getDate()) {
-    docs = docs.find({ busDepartureTime: { $gte: new Date().getHours() } });
+    docs = docs.find({ busDepartureTime: { $gte: Number(new Date().getHours()) + 6 } });
   }
   docs = await docs;
-  console.log(docs);
-  console.log(new Date());
+  console.log(new Date(Number(new Date().getHours()) + 6));
   // TODO: give proper error for no results found
   req.docs = docs;
   req.searchedDate = date;
