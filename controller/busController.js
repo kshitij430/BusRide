@@ -61,7 +61,6 @@ exports.getCityBus = catchAsync(async function (req, res, next) {
     docs = docs.find({ busDepartureTime: { $gte: Number(new Date().getHours()) + 6 } });
   }
   docs = await docs;
-  console.log(Number(new Date().getHours()) + 6);
   // TODO: give proper error for no results found
   req.docs = docs;
   req.searchedDate = date;
@@ -128,7 +127,7 @@ exports.getCityBusAPI = catchAsync(async function (req, res, next) {
     }
   }
   if (new Date(date).getDate() === new Date().getDate()) {
-    docs = docs.find({ busDepartureTime: { $gte: new Date().getHours() } });
+    docs = docs.find({ busDepartureTime: { $gte: Number(new Date().getHours()) + 6 } });
   }
   docs = await docs;
   res.status(200).json({
