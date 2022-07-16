@@ -61,6 +61,8 @@ exports.getCityBus = catchAsync(async function (req, res, next) {
     docs = docs.find({ busDepartureTime: { $gte: new Date().getHours() } });
   }
   docs = await docs;
+  console.log(docs);
+  console.log(new Date().getHours());
   // TODO: give proper error for no results found
   req.docs = docs;
   req.searchedDate = date;
