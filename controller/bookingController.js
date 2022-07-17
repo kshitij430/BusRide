@@ -8,6 +8,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 exports.createSession = catchAsync(async (req, res, next) => {
   // 1) get tour
+  if (!req.user) return next(new AppErr("Please Login to continue..", 403));
   const bus = await Bus.findById(req.params.busID);
   const seats = req.query.seats.split(",");
   const { busDepartureDate } = req.query;
