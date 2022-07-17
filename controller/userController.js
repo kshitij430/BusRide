@@ -106,8 +106,7 @@ exports.isLoggedIn = catchAsync(async function (req, res, next) {
     }
 
     if (!token) {
-      // return next(new AppErr("Please Login To Continue"), 403);
-      return next();
+      return next(new AppErr("Please Login To Continue"), 403);
     }
     // 2) verify the jwt token received from the header
     const reconstructedPayload = await promisify(jwt.verify)(token, process.env.JWT_SECRET_KEY);
@@ -115,7 +114,7 @@ exports.isLoggedIn = catchAsync(async function (req, res, next) {
     // 3)check if the user exists in the DB or not
     const user = await User.findOne({ _id: reconstructedPayload._id });
     if (!user) {
-      return next("Please Login to continue..");
+      return next("User not found", 403);
     }
     req.user = user;
     res.locals.user = user;
