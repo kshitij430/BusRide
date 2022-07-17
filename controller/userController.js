@@ -115,7 +115,7 @@ exports.isLoggedIn = catchAsync(async function (req, res, next) {
     // 3)check if the user exists in the DB or not
     const user = await User.findOne({ _id: reconstructedPayload._id });
     if (!user) {
-      return next();
+      return next("Please Login to continue..");
     }
     req.user = user;
     res.locals.user = user;

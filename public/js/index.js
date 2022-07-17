@@ -83,7 +83,6 @@ if (createBusBtn || viewBusBtn) {
 }
 
 const getTicektBuses = async function () {
-  console.log(sideBarView);
   const userID = document.querySelector("#user-name").dataset.operatorid;
   const html = await viewUserBuses(userID);
   sideBarView.style.width = "70vw";
